@@ -10,7 +10,7 @@
         Dungeon
     };
 
-    internal class Tile
+    internal class Tile // TODO implement zeights for each tileType for rarities
     {
         private TileType _type;
         private char _letter;
