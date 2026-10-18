@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using GardenCrawler_Core;
 
 namespace GardenCrawler
 {
@@ -6,6 +7,8 @@ namespace GardenCrawler
     {
         static void Main(string[] args)
         {
+            Map map = new Map(new Vector2Int(5,5));
+            map.DisplayMap();
         }
     }
 }

@@ -10,7 +10,7 @@
         Dungeon
     };
 
-    public class Tile
+    internal class Tile
     {
         private TileType _type;
         private char _letter;

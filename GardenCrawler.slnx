@@ -1,3 +1,5 @@
 <Solution>
-  <Project Path="GardenCrawler/GardenCrawler.csproj" />
+  <Project Path="GardenCrawler/GardenCrawler_App.csproj" />
+  <Project Path="GardenCrawler_Core/GardenCrawler_Core.csproj" Id="625caf0e-42b6-40a9-9661-9b23abefe36d" />
+  <Project Path="GardenCrawler_Editor/GardenCrawler_Editor.csproj" Id="98e6dd44-dfd1-4640-a1fc-f043dec71bc2" />
 </Solution>

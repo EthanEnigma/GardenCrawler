@@ -7,4 +7,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\GardenCrawler_Core\GardenCrawler_Core.csproj" />
+  </ItemGroup>
+
 </Project>
