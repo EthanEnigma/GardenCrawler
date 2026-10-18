@@ -16,7 +16,6 @@ namespace GardenCrawler_Core
         {
             _x = xy;
             _y = xy;
-
         }
         public Vector2Int(int x, int y)
         {
@@ -66,10 +65,10 @@ namespace GardenCrawler_Core
         }
 
         // Create and store all map tiles in tileArr
-        private void GenerateTiles()
+        private void GenerateTiles() // TODO implement zeights for each tileType for rarities
         {
             Random rnd = new Random(_seed);
-            Array tileTypeArr = Enum.GetValues(typeof(TileType)); // Study
+            Array tileTypeArr = Enum.GetValues(typeof(TileType));
 
             for (int i = 0; i < _size.X; i++)
             {
