@@ -10,17 +10,90 @@ namespace GardenCrawler_Core
         private int _currentLevel;
         private float _maxHealth;
         private float _health;
-        private float _armor;
+        private float _armor; // TODO create armor objects
         private float _strength;
         private float _intelligence;
-        private float _accuracy;
+        private float _accuracy; // TODO
 
-        public Entity(string name, int level)
+        public Entity(string name, int level) // TODO
         {
             _name = name;
             _currentLevel = level;
+            try
+            {
+                refreshMaxHealth();
+                refreshStrength();
+                refreshIntelligence();
+            }catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            _health = _maxHealth;
+        }
 
+        public void refreshMaxHealth() // 20+(level-1)*5
+        {
+            _maxHealth = 20 + (_currentLevel-1) * 5;
+        }
 
+        public void refreshStrength() // 5+(level-1)*2
+        {
+            _strength = 5 + (_currentLevel-1) * 2;
+        }
+
+        public void refreshIntelligence() // 5+(level-1)*2
+        {
+            _intelligence = 5 + (_currentLevel-1) * 2;
+        }
+
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+        }
+        public int CurrentLevel
+        {
+            get
+            {
+                return _currentLevel;
+            }
+        }
+        public float MaxHealth
+        {
+            get
+            {
+                return _maxHealth;
+            }
+        }
+        public float Health
+        {
+            get
+            {
+                return _health;
+            }
+        }
+        public float Armor
+        {
+            get
+            {
+                return _armor;
+            }
+        }
+        public float Strength
+        {
+            get
+            {
+                return _strength;
+            }
+        }
+        public float Intelligence
+        {
+            get
+            {
+                return _intelligence;
+            }
         }
     }
 }
