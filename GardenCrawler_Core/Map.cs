@@ -6,101 +6,111 @@ using System.Text;
 
 namespace GardenCrawler_Core
 {
-    // Vector2 with int value for the _size
-    public struct Vector2Int
-    {
-        public int _x;
-        public int _y;
-
-        public Vector2Int(int xy)
-        {
-            _x = xy;
-            _y = xy;
-        }
-        public Vector2Int(int x, int y)
-        {
-            _x = x;
-            _y = y;
-        }
-
-        public int X
-        {
-            get
-            {
-                return _x;
-            }
-        }
-
-        public int Y
-        {
-            get
-            {
-                return _y;
-            }
-        }
-    }
-
     public class Map
     {
-        private Vector2Int _size;
+        private Tuple<int, int> _size;
         private int _seed;
+            private List<TileType> _tileTypeList = new List<TileType>
+            {
+                new TileType("Plain", 100, '_'),
+                new TileType("TallGrass", 100, '"'),
+                new TileType("Bramble", 25, '#'),
+                new TileType("Water", 35, '~'),
+                new TileType("Village", 15, 'V'),
+                new TileType("Dungeon", 15, 'D')
+            };
         private Tile[,] _tileArr;
-        private Vector2Int _playerPos; // TODO
+        private Tuple<int, int> _playerPos; // TODO
 
-        public Map(Vector2Int size)
+        public Map(Tuple<int, int> size)
         {
             _size = size;
             _seed = new Random().Next();
-            _tileArr = new Tile[_size.X, _size.Y];
+            _tileArr = new Tile[_size.Item1, _size.Item2];
+            _playerPos = new Tuple<int, int>(1,1);
 
             GenerateTiles();
         }
-        public Map(Vector2Int size, int seed)
+        public Map(Tuple<int, int> size, int seed)
         {
             _size = size;
             _seed = seed;
-            _tileArr = new Tile[_size.X, _size.Y];
+            _tileArr = new Tile[_size.Item1, _size.Item2];
+            _playerPos = new Tuple<int, int>(1,1);
 
             GenerateTiles();
         }
 
+        // Calculate the type from weights
+        public TileType CalculateWeight(Random rnd)
+        {
+            int totalWeight = 0;
+
+            float currentWeightSum = 0;
+            foreach (TileType type in _tileTypeList)
+            {
+                totalWeight += type.Weight;
+            }
+
+            int roll = rnd.Next(totalWeight);
+
+            foreach (TileType type in _tileTypeList)
+            {
+                currentWeightSum += type.Weight;
+
+                if (roll < currentWeightSum)
+                {
+                    return type;
+                }
+            }
+            return null;
+        }
+
+        public void DisplayChances() // DEBUG
+        {
+            int totalWeight = 0;
+            foreach (TileType type in _tileTypeList)
+            {
+                totalWeight += type.Weight;
+            }
+
+            foreach (TileType type in _tileTypeList)
+            {
+                float rarity = (float)type.Weight / totalWeight;
+                float rarityPercent = rarity * 100;
+                Console.WriteLine("{0} '{1}' [{2}] - {3}%", type.Id, type.Character, type.Weight, Math.Round(rarityPercent, 1));
+            }
+        }
+
         // Create and store all map tiles in tileArr
-        private void GenerateTiles() // TODO implement zeights for each tileType for rarities
+        private void GenerateTiles()
         {
             Random rnd = new Random(_seed);
-            Array tileTypeArr = Enum.GetValues(typeof(TileType));
 
-            for (int i = 0; i < _size.X; i++)
+            for (int i = 0; i < _size.Item1; i++)
             {
-                for (int j = 0; j < _size.Y; j++)
+                for (int j = 0; j < _size.Item2; j++)
                 {
-                    try
-                    {
-                        TileType rndTile = (TileType)tileTypeArr.GetValue(rnd.Next(tileTypeArr.Length));
-                        _tileArr[i, j] = new Tile(rndTile);
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e.Message);
-                    }
+                    Tile newTile = new Tile(CalculateWeight(rnd));
+                    _tileArr[i, j] = newTile;
                 }
             }
         }
 
         // Displays the map by looping on all the tiles
-        public void DisplayMap()
+        public void DisplayMap() // TODO make more stylized
         {
-            for (int i = 0; i < _size.Y; i++)
+            for (int i = 0; i < _size.Item2; i++)
             {
-                for (int j = 0; j < _size.X; j++)
+                for (int j = 0; j < _size.Item1; j++)
                 {
-                    Console.Write("{0} ", _tileArr[j, i].Letter);
+                    Console.Write("{0} ", _tileArr[j,i].Character);
                 }
                 Console.Write("\n");
             }
         }
 
-        public Vector2Int Size
+        public Tuple<int, int> Size
         {
             get
             {
