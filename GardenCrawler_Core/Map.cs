@@ -8,7 +8,7 @@ namespace GardenCrawler_Core
 {
     public class Map
     {
-        private Tuple<int, int> _size;
+        private Tuple<uint, uint> _size;
         private int _seed;
             private List<TileType> _tileTypeList = new List<TileType>
             {
@@ -17,26 +17,26 @@ namespace GardenCrawler_Core
                 new TileType("Bramble", 25, '#'),
                 new TileType("Water", 35, '~'),
                 new TileType("Village", 15, 'V'),
-                new TileType("Dungeon", 15, 'D')
+                new TileType("Dungeon", 10, 'D')
             };
         private Tile[,] _tileArr;
-        private Tuple<int, int> _playerPos; // TODO
+        private Tuple<uint, uint> _playerPos; // TODO
 
-        public Map(Tuple<int, int> size)
+        public Map(Tuple<uint, uint> size)
         {
             _size = size;
             _seed = new Random().Next();
             _tileArr = new Tile[_size.Item1, _size.Item2];
-            _playerPos = new Tuple<int, int>(1,1);
+            _playerPos = new Tuple<uint, uint>(1,1);
 
             GenerateTiles();
         }
-        public Map(Tuple<int, int> size, int seed)
+        public Map(Tuple<uint, uint> size, int seed)
         {
             _size = size;
             _seed = seed;
             _tileArr = new Tile[_size.Item1, _size.Item2];
-            _playerPos = new Tuple<int, int>(1,1);
+            _playerPos = new Tuple<uint, uint>(1,1);
 
             GenerateTiles();
         }
@@ -58,7 +58,7 @@ namespace GardenCrawler_Core
             {
                 currentWeightSum += type.Weight;
 
-                if (roll < currentWeightSum)
+                if (roll <= currentWeightSum)
                 {
                     return type;
                 }
@@ -110,7 +110,7 @@ namespace GardenCrawler_Core
             }
         }
 
-        public Tuple<int, int> Size
+        public Tuple<uint, uint> Size
         {
             get
             {
