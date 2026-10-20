@@ -38,7 +38,7 @@ namespace GardenCrawler_Core
         }
         public void RefreshMaxHealth() // Base + armor + boosts
         {
-            _maxHealth = 20 + (_currentLevel-1) * 5;
+            _maxHealth = _baseHealth + _armor;
         }
 
         public void RefreshStrength() // 5+(level-1)*2
