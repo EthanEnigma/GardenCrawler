@@ -8,12 +8,13 @@ namespace GardenCrawler_Core
     {
         private string _name;
         private int _currentLevel;
+        private float _baseHealth;
         private float _maxHealth;
         private float _health;
         private float _armor; // TODO create armor objects
         private float _strength;
         private float _intelligence;
-        private float _accuracy; // TODO
+        //private float _accuracy; // TODO
 
         public Entity(string name, int level) // TODO
         {
@@ -21,9 +22,9 @@ namespace GardenCrawler_Core
             _currentLevel = level;
             try
             {
-                refreshMaxHealth();
-                refreshStrength();
-                refreshIntelligence();
+                RefreshMaxHealth();
+                RefreshStrength();
+                RefreshIntelligence();
             }catch(Exception e)
             {
                 Console.WriteLine(e.Message);
@@ -31,17 +32,21 @@ namespace GardenCrawler_Core
             _health = _maxHealth;
         }
 
-        public void refreshMaxHealth() // 20+(level-1)*5
+        public void RefreshBaseHealth() // 20+(level-1)*5
+        {
+            _baseHealth = 20 + (_currentLevel-1) * 5;
+        }
+        public void RefreshMaxHealth() // Base + armor + boosts
         {
             _maxHealth = 20 + (_currentLevel-1) * 5;
         }
 
-        public void refreshStrength() // 5+(level-1)*2
+        public void RefreshStrength() // 5+(level-1)*2
         {
             _strength = 5 + (_currentLevel-1) * 2;
         }
 
-        public void refreshIntelligence() // 5+(level-1)*2
+        public void RefreshIntelligence() // 5+(level-1)*2
         {
             _intelligence = 5 + (_currentLevel-1) * 2;
         }
