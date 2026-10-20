@@ -1,47 +1,19 @@
-﻿namespace GardenCrawler_Core
-{
-    public enum TileType
-    {
-        Plain,
-        TallGrass,
-        Brambles,
-        Water,
-        Village,
-        Dungeon
-    };
+﻿using System.Formats.Tar;
+using System.Runtime.InteropServices;
 
-    internal class Tile // TODO implement zeights for each tileType for rarities
+namespace GardenCrawler_Core
+{
+    internal class Tile // TODO implement weights for each tileType for rarities
     {
         private TileType _type;
-        private char _letter;
+        private char _character;
+        private int _weight;
 
         public Tile(TileType type)
         {
             _type = type;
-
-            switch (_type)
-            {
-                case TileType.Plain:
-                    _letter = '.';
-                    break;
-                case TileType.TallGrass:
-                    _letter = '"';
-                    break;
-                case TileType.Brambles:
-                    _letter = '#';
-                    break;
-                case TileType.Water:
-                    _letter = '~';
-                    break;
-                case TileType.Village:
-                    _letter = 'V';
-                    break;
-                case TileType.Dungeon:
-                    _letter = 'D';
-                    break;
-            }
+            _character = _type.Character;
         }
-
         public TileType Type
         {
             get
@@ -49,12 +21,11 @@
                 return _type;
             }
         }
-
-        public char Letter
+        public char Character
         {
             get
             {
-                return _letter;
+                return _character;
             }
         }
     }
